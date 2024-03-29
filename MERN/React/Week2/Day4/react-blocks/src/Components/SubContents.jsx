@@ -1,11 +1,14 @@
-import React from 'react'
-import './Main.css'
+import React from 'react';
+import './Main.css';
+
 const SubContents = () => {
   return (
-    <div className="subcontents" style={{ backgroundColor: '#ffd966' }}>
-    <h3>Subcontents</h3>
-  </div>
-  )
-}
+    <div className="container">
+      <div className="subcontents">
+        <h3>Subcontents</h3>
+      </div>
+    </div>
+  );
+};
 
-export default SubContents
+export default SubContents;

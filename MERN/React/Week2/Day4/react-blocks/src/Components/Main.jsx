@@ -3,7 +3,8 @@ import "./Main.css";
 
 const Main = ({ children }) => {
   return (
-    <div className="main" style={{ backgroundColor: "#dddddd" }}>
+    <div className="main">
+      Main
       {children}
     </div>
   );
