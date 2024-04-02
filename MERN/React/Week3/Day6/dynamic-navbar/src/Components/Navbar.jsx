@@ -1,11 +1,14 @@
 import React from 'react'
 import { useNameContext } from './Context';
 
-
+const style ={ 
+    background :"purple"
+}
 const Navbar = () => {
+    
     const {name} = useNameContext();
   return (
-    <nav>  Hi , {name} ! </nav>
+    <div style={style}> Hi , {name} !</div>
      );
 };
 
