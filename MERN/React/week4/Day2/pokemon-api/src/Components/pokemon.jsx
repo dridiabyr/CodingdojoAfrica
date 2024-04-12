@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-const pokemon = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+const Pokemon = () => {
   const [pokemon, setPokemon] = useState([]);
 
   const fetchPokemon = () => {
@@ -12,7 +11,7 @@ const pokemon = () => {
       })
       .then((data) => {
         console.log(data);
-        setPokemon(data);
+        setPokemon(data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -28,16 +27,14 @@ const pokemon = () => {
       <table>
         <thead>
           <tr>
-            {" "}
             <th> Name</th>
             <th> url</th>
           </tr>
         </thead>
         {pokemon.map((pokemon) => {
           return (
-            <tr key={pokemon.results.name}>
-              <td> {pokemon.results.name}</td>
-              <td> </td>
+            <tr key={pokemon.name}>
+              <td>{pokemon.name}</td>
             </tr>
           );
         })}
@@ -46,4 +43,4 @@ const pokemon = () => {
   );
 };
 
-export default pokemon;
+export default Pokemon;
