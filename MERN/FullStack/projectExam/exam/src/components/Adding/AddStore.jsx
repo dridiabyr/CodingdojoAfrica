@@ -3,29 +3,27 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import StoreDetails from "../StoreDetails";
 
-
 const AddStore = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [open, setOpen] = useState(true);
-  const [store, setStore] = useState([
+  const [stores, setStores] = useState([
     { name: "1st and Washington", number: 123145, open: true },
     { name: "Weatherby Mall", number: 10323456, open: false },
   ]);
 
-  // eslint-disable-next-line no-unused-vars
-  const [Newstore, setNewStore] = useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/stores");
-        setStore([...store,response.data]);
+        setStores(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name && number) {
@@ -33,11 +31,12 @@ const AddStore = () => {
       axios
         .post("/api/stores", newStore)
         .then((response) => {
-          setStore((prevStore) => [...prevStore, newStore]);
-          setNewStore(newStore);
+          setStores([...stores, response.data]); // Add the newly created store to the state
           setName("");
           setNumber("");
           setOpen(true);
+          const newStoreId = response.data.id;
+          window.location.href = `/store-details/${newStoreId}`;
         })
         .catch((error) => {
           console.error(error);
@@ -75,14 +74,14 @@ const AddStore = () => {
           onChange={(e) => setOpen(e.target.checked)}
         />
         <br />
-        <NavLink to="/StoreDetails">
+        <NavLink to="/store-details">
           <button type="submit">Add Store</button>{" "}
         </NavLink>
       </form>
       <div>
         <h2>Stores:</h2>
         <ul>
-          {store.map((store, index) => (
+          {stores.map((store, index) => (
             <li key={index}>
               <h3>{store.name}</h3>
               <p>Number: {store.number}</p>

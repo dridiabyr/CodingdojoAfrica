@@ -1,22 +1,15 @@
 const express = require("express");
+require("./config/mongoose.config");
 
 const app = express();
+require("dotenv").config();
+require("./config/mongoose.config");
+const port = process.env.PORT;
 
-let store = [
-  { name: "1st and Washington", number: 123145, open: true },
-  { name: "Weatherby Mall", number: 10323456, open: false },
-];
+app.use(express.json(), express.urlencoded({ extended: true }));
 
-app.get("/api/stores", (req, res) => {
-  res.json(store);
-});
+require("./routes/store.route")(app);
 
-app.post("/api/stores", (req, res) => {
-  const newStore = req.body;
-  store.push(newStore);
-  res.json(newStore);
-});
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(port, () => {
+  console.log(`listening to port ${port}`);
 });

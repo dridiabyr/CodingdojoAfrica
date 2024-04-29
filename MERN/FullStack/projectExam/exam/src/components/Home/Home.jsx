@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import "./Home.css";
 import { NavLink } from "react-router-dom";
-const Home = () => {
+import axios from "axios";
+const Home = (props) => {
   const [store, setStore] = useState([
     { name: "1st and Washington", number: 123145, open: true },
     { name: "Weatherby Mall", number: 10323456, open: false },
   ]);
 
-  const handleDelete = (number) => {
-    const updateStore = store.filter((store) => store.number !== number);
-    setStore(updateStore);
+   const handleDelete = (storeId) => {
+    const { removeFromDom } = props;
+    axios
+      .delete("http://localhost:8000/api/delete/" + storeId)
+      .then((res) => {
+        removeFromDom(storeId);
+      })
+      .catch((err) => console.error(err));
   };
   return (
     <div className="container">
@@ -42,7 +48,7 @@ const Home = () => {
                 {" "}
                 <p>
                   {" "}
-                  <button onClick={() => handleDelete(store.number)}>
+                  <button onClick={() => handleDelete(store._id)}>
                     {" "}
                     Delete{" "}
                   </button>{" "}
